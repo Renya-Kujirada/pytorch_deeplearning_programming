@@ -5,7 +5,10 @@ RUN pip install -U pip \
     && pip install --no-cache-dir torchviz \
     && pip install --no-cache-dir torchinfo
 
-# RUN apt-get dist-upgrade \
+RUN useradd -m -d /home/dev-user -s /bin/bash dev-user
+USER dev-user
+
+# RUN apt-get dist-upgrade -y\
 #     && apt-get update \
 #     && apt-get install build-essential \
 #     && apt-get install graphviz \
