@@ -5,12 +5,8 @@ RUN pip install -U pip \
     && pip install --no-cache-dir torchviz \
     && pip install --no-cache-dir torchinfo
 
-RUN apt-get dist-upgrade -y\
-    && apt-get update \
-    && apt-get install build-essential \
-    && apt-get autoremove -y \
-    && apt-get clean \
-    && rm -rf /usr/local/src/*
+RUN conda install graphviz \
+    && conda clean -i -t -y
 
 RUN useradd -m -d /home/dev-user -s /bin/bash dev-user
 USER dev-user
