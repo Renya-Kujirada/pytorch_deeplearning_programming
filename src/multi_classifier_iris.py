@@ -40,13 +40,33 @@ def preprocess(seed):
 
 
 def train(net, inputs, labels, criterion, optimizer, epoch):
-    optimizer.zero_grad()
-    outputs = net(inputs)
-    loss = criterion(outputs, labels)
-    loss.backward()
-    optimizer.step()
+    net.train()
+    optimizer.zero_grad()  # 勾配の初期化
+    outputs = net(inputs)   # 予測計算
+    loss = criterion(outputs, labels)   # 損失計算
+    loss.backward()  # 勾配計算
+    optimizer.step()  # パラメータ修正
+    predicted = torch.max(outputs, 1)[1]  # 予測値取得
+
+    train_loss = loss.item()    # 損失取得
+    train_acc = (predicted == labels).sum() / len(labels)  # 精度計算
     if epoch % 10 == 0:
-        print(loss.item())
+        print(
+            f'Train Epoch: {epoch}, loss: {train_loss:.5f}, acc:{train_acc:.5f}')
+    return train_loss, train_acc
+
+
+def test(net, inputs_test, labels_test, criterion, epoch):
+    net.eval()
+    with torch.no_grad():
+        outputs_test = net(inputs_test)
+        loss_test = criterion(outputs_test, labels_test)
+        predicted_test = torch.max(outputs_test, 1)[1]
+    val_loss = loss_test.item()
+    val_acc = (predicted_test == labels_test).sum() / len(labels_test)
+    if epoch % 10 == 0:
+        print(f'val_loss: {val_loss:.5f}, val_acc: {val_acc:.5f}\n')
+    return val_loss, val_acc
 
 
 def main():
@@ -72,8 +92,22 @@ def main():
 
     inputs = torch.tensor(x_train).float().to(device)
     labels = torch.tensor(y_train).long().to(device)
+    inputs_test = torch.tensor(x_test).float()
+    labels_test = torch.tensor(y_test).long()
+
     for epoch in range(num_epochs):
-        train(net, inputs, labels, criterion, optimizer, epoch)
+        train_loss, train_acc = train(
+            net, inputs, labels, criterion, optimizer, epoch)
+        val_loss, val_acc = test(
+            net, inputs_test, labels_test, criterion, epoch)
+        items = np.array([epoch, train_loss, train_acc, val_loss, val_acc])
+        history = np.vstack((history, items))
+
+    print(
+        f'initial state: loss: {history[0, 3]:.5f}, acc: {history[0, 4]:.5f}')
+    print(
+        f'current state: loss: {history[-1, 3]:.5f}, acc: {history[-1, 4]:.5f}')
+    np.savetxt('./result.csv', history, delimiter=',')
 
 
 if __name__ == '__main__':
