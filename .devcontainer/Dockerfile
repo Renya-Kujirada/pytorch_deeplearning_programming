@@ -10,3 +10,7 @@ RUN conda install graphviz \
 
 RUN useradd -m -d /home/dev-user -s /bin/bash dev-user
 USER dev-user
+
+
+# pip install --no-cache-dir mlflow
+# pip install --no-cache-dir autopep8
