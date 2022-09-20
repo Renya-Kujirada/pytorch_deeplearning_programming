@@ -6,6 +6,8 @@ import torch.nn.functional as F
 import torch.optim as optim
 from torchvision import datasets, transforms
 from torch.optim.lr_scheduler import StepLR
+import mlflow
+import mlflow.pyorch
 
 
 class Net(nn.Module):
@@ -49,6 +51,7 @@ def train(args, model, device, train_loader, optimizer, epoch):
                 100. * batch_idx / len(train_loader), loss.item()))
             if args.dry_run:
                 break
+    return loss.item()
 
 
 def test(model, device, test_loader):
@@ -70,6 +73,7 @@ def test(model, device, test_loader):
     print('\nTest set: Average loss: {:.4f}, Accuracy: {}/{} ({:.0f}%)\n'.format(
         test_loss, correct, len(test_loader.dataset),
         100. * correct / len(test_loader.dataset)))
+    return test_loss, correct
 
 
 def main():
@@ -126,13 +130,29 @@ def main():
     optimizer = optim.Adadelta(model.parameters(), lr=args.lr)
 
     scheduler = StepLR(optimizer, step_size=1, gamma=args.gamma)
-    for epoch in range(1, args.epochs + 1):
-        train(args, model, device, train_loader, optimizer, epoch)
-        test(model, device, test_loader)
-        scheduler.step()
 
-    if args.save_model:
-        torch.save(model.state_dict(), "mnist_cnn.pt")
+    # 実験の作成と指定
+    exp_name = "mnist_classification"
+    mlflow.create_experiment(exp_name)
+    mlflow.set_experiment(exp_name)
+    # 記録の開始
+    with mlflow.start_run() as run:
+        for epoch in range(1, args.epochs + 1):
+            train_loss = train(args, model, device,
+                               train_loader, optimizer, epoch)
+            mlflow.log_metric(key='train loss', value=train_loss, step=epoch)
+
+            test_loss, accuracy = test(model, device, test_loader)
+            mlflow.log_metric(key='test average loss',
+                              value=test_loss, step=epoch)
+            mlflow.log_metric(key='accuracy', value=accuracy, step=epoch)
+
+            scheduler.step()
+
+        if args.save_model:
+            torch.save(model.state_dict(), "mnist_cnn.pt")
+            mlflow.pytorch.log_model(model, 'model')
+    mlflow.end_run()
 
 
 if __name__ == '__main__':
