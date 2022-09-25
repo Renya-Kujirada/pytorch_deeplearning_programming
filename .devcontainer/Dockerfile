@@ -9,8 +9,13 @@ RUN pip install -U pip \
     && pip install --no-cache-dir ipywidgets \
     && jupyter nbextension enable --py widgetsnbextension
 
+RUN apt-get update && apt-get install -y \
+    screen
+
 RUN conda install graphviz \
     && conda clean -i -t -y
 
 RUN useradd -m -d /home/dev-user -s /bin/bash dev-user
 USER dev-user
+
+CMD screen watch -n 1 nvidia-smi
