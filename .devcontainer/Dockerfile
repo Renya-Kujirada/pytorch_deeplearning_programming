@@ -15,7 +15,9 @@ RUN apt-get update && apt-get install -y \
 RUN conda install graphviz \
     && conda clean -i -t -y
 
+# work in container rootless.
 RUN useradd -m -d /home/dev-user -s /bin/bash dev-user
 USER dev-user
 
+# save gpu session between local and container.
 CMD screen watch -n 1 nvidia-smi
