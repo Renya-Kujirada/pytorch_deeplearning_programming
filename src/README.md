@@ -5,7 +5,7 @@
 - CNNの構成は以下．
   - (畳み込み関数+relu)×2
   - maxpooling
-  - 隠れ層×2の全結合モデル(layer関数+relu+layer関数)
+  - 隠れ層×2の全結合モデル(layer関数 + relu + layer関数)
   - softmax + 交差エントロピー関数
 - train.pyが訓練スクリプト．
 
