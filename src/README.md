@@ -15,4 +15,5 @@
 - 後で追記
 
 ## [mlflow](https://github.com/Renya-Kujirada/pytorch_deeplearning_programming/tree/master/src/mlflow)
+- mlflowで色々遊んでみた
 - 後で追記
