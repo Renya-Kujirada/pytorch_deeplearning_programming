@@ -8,6 +8,8 @@
   - 隠れ層×2の全結合モデル(layer関数 + relu + layer関数)
   - softmax + 交差エントロピー関数
 - train.pyが訓練スクリプト．
+- 50epochの実験の結果，過学習気味であることがわかり，20epoch程度で止めておくべきであると考えられる．
+- 精度としては66%程度．
 
 
 ## [multi_classifier_iris](https://github.com/Renya-Kujirada/pytorch_deeplearning_programming/tree/master/src/multi_classifier_iris)
