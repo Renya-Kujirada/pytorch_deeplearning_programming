@@ -1,7 +1,7 @@
 import torch.nn as nn
 
 
-class CNN(nn.module):
+class CNN(nn.Module):
     def __init__(self, n_output, n_hidden):
         super().__init__()
         # input channel:3, output channel:32, kernel size:3

@@ -1,3 +1,4 @@
+import torch
 import torchvision.transforms as transforms
 import torchvision.datasets as datasets
 
@@ -32,6 +33,6 @@ class Preprocess():
 
     def torch_seed(self, seed=123):
         torch.manual_seed(seed)
-        torch.cuda_mannual_seed(seed)
+        torch.cuda.manual_seed(seed)
         torch.backends.cudnn.deterministic = True
         torch.use_determinstic_algorithms = True
