@@ -12,7 +12,7 @@ class Summarize():
         num_epoch = len(history_train)
         unit = num_epoch / 10
 
-        # 学習曲線の表示（損失）
+        # 学習曲線の表示
         plt.figure(figsize=(9, 8))
         plt.plot(xaxis, history_train, "b", label="訓練")
         plt.plot(xaxis, history_val, "k", label="検証")
