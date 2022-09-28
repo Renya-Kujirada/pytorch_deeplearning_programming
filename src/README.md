@@ -1,5 +1,12 @@
 # src内の説明
 
+
+## [model_tuning](https://github.com/Renya-Kujirada/pytorch_deeplearning_programming/tree/master/src/model_tuning)
+- [multi_classifier_cifar10](https://github.com/Renya-Kujirada/pytorch_deeplearning_programming/tree/master/src/multi_classifier_cifar10)の精度向上のため，下記を検証
+  - Dropout: 学習毎に，ランダムに中間テンソルの要素の出力値を0にする．
+  - Batch Normalization
+  - Data Augumentation
+
 ## [multi_classifier_cifar10](https://github.com/Renya-Kujirada/pytorch_deeplearning_programming/tree/master/src/multi_classifier_cifar10)
 - CNNによるCIFAR10の画像認識．(チャネル数と画素数は，3 * 32 * 32)
 - CNNの構成は以下．
