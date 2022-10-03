@@ -3,9 +3,9 @@
 
 ## [model_tuning](https://github.com/Renya-Kujirada/pytorch_deeplearning_programming/tree/master/src/model_tuning)
 - [multi_classifier_cifar10](https://github.com/Renya-Kujirada/pytorch_deeplearning_programming/tree/master/src/multi_classifier_cifar10)の精度向上のため，下記を検証
-  - Dropout: 学習毎に，ランダムに中間テンソルの要素の出力値を0にする．
-  - Batch Normalization
-  - Data Augumentation
+  - Dropout: 学習毎に，ランダムに中間テンソルの要素の出力値を0にすることで，過学習を回避する．
+  - Batch Normalization: ミニバッチ学習時，畳込み層の出力に対して正規化処理を実施した後，次の畳込み層の入力とすることで，学習効率向上と過学習回避を目指す．
+  - Data Augumentation: 学習前の入力データに対しランダムに加工（反転，切り抜き，リサイズ，アフィン変換，，）を施し学習データのバリエーションを増やすことで，頑健性を向上させる．
 
 ## [multi_classifier_cifar10](https://github.com/Renya-Kujirada/pytorch_deeplearning_programming/tree/master/src/multi_classifier_cifar10)
 - CNNによるCIFAR10の画像認識．(チャネル数と画素数は，3 * 32 * 32)
