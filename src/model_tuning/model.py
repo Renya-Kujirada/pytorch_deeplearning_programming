@@ -1,3 +1,4 @@
+from torch import flatten
 import torch.nn as nn
 
 
@@ -17,3 +18,33 @@ class CNN(nn.Module):
 
         self.l1 = nn.Linear(4*4*128, 128)
         self.l2 = nn.Linear(128, num_classes)
+
+        self.features = nn.Sequential(
+            self.conv1,
+            self.relu,
+            self.conv2,
+            self.relu,
+            self.maxpool,
+            self.conv3,
+            self.relu,
+            self.conv4,
+            self.relu,
+            self.maxpool,
+            self.conv5,
+            self.relu,
+            self.conv6,
+            self.relu,
+            self.maxpool
+        )
+
+        self.classifier = nn.Sequential(
+            self.l1,
+            self.relu,
+            self.l2,
+        )
+
+    def forward(self, x):
+        x1 = self.features(x)
+        x2 = self.flatten(x1)
+        x3 = self.classifier(x2)
+        return x3
