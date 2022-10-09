@@ -38,7 +38,7 @@ def main():
     net = CNN(n_output).to(device)
 
     # loss function
-    criterion = nn.CrossEntoropyLoss()
+    criterion = nn.CrossEntropyLoss()
 
     # optimize function
     optimizer = optim.SGD(net.parameters(), lr=lr)
@@ -49,7 +49,7 @@ def main():
     # training and validation
     trainer = Trainer()
     history = trainer.fit(net, optimizer, criterion, num_epochs, train_loader, test_loader, device, history)
-    np.savetxt(result_path. history, delimiter=",")
+    np.savetxt(result_path, history, delimiter=",")
 
 
 if __name__ == "__main__":

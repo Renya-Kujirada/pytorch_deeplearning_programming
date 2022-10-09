@@ -42,7 +42,7 @@ class Trainer:
             avg_train_loss = train_loss / count  # 損失の計算
             avg_train_acc = train_acc / count  # 精度の計算
 
-        print(f"Epoch: {epoch+1}, loss: {avg_train_loss:.5f}, acc: {avg_train_acc:.5f}")
+        print(f"Epoch: {epoch+1}, train_loss: {avg_train_loss:.5f}, train_acc: {avg_train_acc:.5f}")
         return avg_train_loss, avg_train_acc
 
     # test in one epoch
