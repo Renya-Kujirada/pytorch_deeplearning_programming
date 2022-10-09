@@ -14,7 +14,7 @@ def main():
     mu = 0.5
     sigma = 0.5
     dataset_path = "./data"
-    result_path = "./src/multi_classifier_cifar10/result.csv"
+    result_path = "./src/multi_classifier_cifar10/result/result.csv"
     batch_size = 100
     n_hidden = 128  # no of hidden layer's nodes
     n_output = 10
