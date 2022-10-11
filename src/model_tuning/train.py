@@ -5,7 +5,7 @@ import torch.optim as optim
 from torch.utils.data import DataLoader
 
 from preprocess import Preprocess
-from model import CNN
+from model import CNN, CNN_with_Dropout
 from trainer import Trainer
 
 
@@ -15,7 +15,11 @@ def main():
     mu = 0.5
     sigma = 0.5
     dataset_path = "./data"
-    result_path = "./src/model_tuning/result/result.csv"
+    # result_dir = "./src/model_tuning/result_optimizer_SGD"
+    # result_dir = "./src/model_tuning/result_Adam"
+    result_dir = "./src/model_tuning/result_Adam_with_Dropout"
+    metrics_path = f"{result_dir}/result.csv"
+    model_path = f"{result_dir}/model.pth"
     batch_size = 100
     n_output = 10
     lr = 0.01
@@ -34,13 +38,16 @@ def main():
     preprocess.torch_seed(seed)
 
     # prepare model
-    net = CNN(n_output).to(device)
+    # net = CNN(n_output).to(device)
+    net = CNN_with_Dropout(n_output).to(device)
 
     # loss function
     criterion = nn.CrossEntropyLoss()
 
     # optimize function
-    optimizer = optim.SGD(net.parameters(), lr=lr)
+    # optimizer = optim.SGD(net.parameters(), lr=lr)
+    # optimizer = optim.SGD(net.parameters, lr=lr, momentum=0.9)
+    optimizer = optim.Adam(net.parameters())
 
     # for record metrics
     history = np.zeros((0, 5))
@@ -48,7 +55,10 @@ def main():
     # training and validation
     trainer = Trainer()
     history = trainer.fit(net, optimizer, criterion, num_epochs, train_loader, test_loader, device, history)
-    np.savetxt(result_path, history, delimiter=",")
+
+    # record metrics and model
+    np.savetxt(metrics_path, history, delimiter=",")
+    torch.save(net.state_dict(), model_path)
 
 
 if __name__ == "__main__":
