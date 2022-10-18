@@ -5,7 +5,7 @@ import torch.optim as optim
 from torch.utils.data import DataLoader
 
 from preprocess import Preprocess
-from model import CNN, CNN_with_Dropout
+from model import CNN, CNN_with_Dropout, CNN_with_Dropout_BatchNorm
 from trainer import Trainer
 
 
@@ -17,7 +17,8 @@ def main():
     dataset_path = "./data"
     # result_dir = "./src/model_tuning/result_optimizer_SGD"
     # result_dir = "./src/model_tuning/result_Adam"
-    result_dir = "./src/model_tuning/result_Adam_with_Dropout"
+    # result_dir = "./src/model_tuning/result_Adam_with_Dropout"
+    result_dir = "./src/model_tuning/result_Adam_with_Dropout_BatchNorm"
     metrics_path = f"{result_dir}/result.csv"
     model_path = f"{result_dir}/model.pth"
     batch_size = 100
@@ -39,7 +40,8 @@ def main():
 
     # prepare model
     # net = CNN(n_output).to(device)
-    net = CNN_with_Dropout(n_output).to(device)
+    # net = CNN_with_Dropout(n_output).to(device)
+    net = CNN_with_Dropout_BatchNorm(n_output).to(device)
 
     # loss function
     criterion = nn.CrossEntropyLoss()
