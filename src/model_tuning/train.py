@@ -18,13 +18,14 @@ def main():
     # result_dir = "./src/model_tuning/result_optimizer_SGD"
     # result_dir = "./src/model_tuning/result_Adam"
     # result_dir = "./src/model_tuning/result_Adam_with_Dropout"
-    result_dir = "./src/model_tuning/result_Adam_with_Dropout_BatchNorm"
+    # result_dir = "./src/model_tuning/result_Adam_with_Dropout_BatchNorm"
+    result_dir = "result_Adam_with_Dropout_BatchNorm_DataAugmentation"
     metrics_path = f"{result_dir}/result.csv"
     model_path = f"{result_dir}/model.pth"
     batch_size = 100
     n_output = 10
     lr = 0.01
-    num_epochs = 50
+    num_epochs = 100
 
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
     print(f"use device {device}")
