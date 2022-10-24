@@ -10,9 +10,18 @@ class Preprocess():
         self.data_root = dataset_path
 
     def prepare_dataset(self):
+        # transform = transforms.Compose([
+        #     transforms.ToTensor(),  # データのテンソル化
+        #     transforms.Normalize(self.mu, self.sigma),  # データの正規化
+        # ])
+
         transform = transforms.Compose([
+            # ランダムに左右反転
+            transforms.RandomHorizontalFlip(p=0.5),
             transforms.ToTensor(),  # データのテンソル化
             transforms.Normalize(self.mu, self.sigma),  # データの正規化
+            # ランダムに部分領域を削除
+            transforms.RandomErasing(p=0.5, scale=(0.02, 0.33), ratio=(0.3, 0.3), value=0, inplace=False)
         ])
 
         # 訓練データセット，3階テンソル
