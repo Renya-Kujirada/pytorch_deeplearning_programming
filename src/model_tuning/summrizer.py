@@ -30,7 +30,7 @@ if __name__ == "__main__":
     # fig_dir = "./src/model_tuning/result"
     # fig_dir = "./src/model_tuning/result_Adam_with_Dropout"
     # fig_dir = "./src/model_tuning/result_Adam_with_Dropout_BatchNorm"
-    fig_dir = "result_Adam_with_Dropout_BatchNorm_DataAugmentation"
+    fig_dir = "./src/model_tuning/result_Adam_with_Dropout_BatchNorm_DataAugmentation"
     result_path = f"{fig_dir}/result.csv"
     fig_loss_path = f"{fig_dir}/train_loss_curve.png"
     fig_acc_path = f"{fig_dir}/train_acc_curve.png"
