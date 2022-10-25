@@ -19,7 +19,7 @@ def main():
     # result_dir = "./src/model_tuning/result_Adam"
     # result_dir = "./src/model_tuning/result_Adam_with_Dropout"
     # result_dir = "./src/model_tuning/result_Adam_with_Dropout_BatchNorm"
-    result_dir = "result_Adam_with_Dropout_BatchNorm_DataAugmentation"
+    result_dir = "./src/model_tuning/result_Adam_with_Dropout_BatchNorm_DataAugmentation"
     metrics_path = f"{result_dir}/result.csv"
     model_path = f"{result_dir}/model.pth"
     batch_size = 100

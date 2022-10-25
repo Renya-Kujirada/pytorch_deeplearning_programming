@@ -10,18 +10,18 @@ class Preprocess():
         self.data_root = dataset_path
 
     def prepare_dataset(self):
-        # transform = transforms.Compose([
-        #     transforms.ToTensor(),  # データのテンソル化
-        #     transforms.Normalize(self.mu, self.sigma),  # データの正規化
-        # ])
-
-        transform = transforms.Compose([
+        transform_train = transforms.Compose([
             # ランダムに左右反転
             transforms.RandomHorizontalFlip(p=0.5),
             transforms.ToTensor(),  # データのテンソル化
             transforms.Normalize(self.mu, self.sigma),  # データの正規化
             # ランダムに部分領域を削除
-            transforms.RandomErasing(p=0.5, scale=(0.02, 0.33), ratio=(0.3, 0.3), value=0, inplace=False)
+            transforms.RandomErasing(p=0.5, scale=(0.02, 0.33), ratio=(0.3, 3.3), value=0, inplace=False)
+        ])
+
+        transform_test = transforms.Compose([
+            transforms.ToTensor(),  # データのテンソル化
+            transforms.Normalize(self.mu, self.sigma),  # データの正規化
         ])
 
         # 訓練データセット，3階テンソル
@@ -29,14 +29,14 @@ class Preprocess():
             root=self.data_root,
             train=True,
             download=True,
-            transform=transform
+            transform=transform_train
         )
         # 検証データセット，3階テンソル
         test_set = datasets.CIFAR10(
             root=self.data_root,
             train=False,
             download=True,
-            transform=transform
+            transform=transform_test
         )
         return train_set, test_set
 
